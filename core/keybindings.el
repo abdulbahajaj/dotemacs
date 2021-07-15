@@ -208,24 +208,33 @@
 (general-define-key
  :states '(normal)
  :keymaps 'vterm-copy-mode-map
- "a" 'my-vterm-append
- "i" 'my-vterm-insert)
+ "a" 'rubicon/vterm-append
+ "i" 'rubicon/vterm-insert)
 
 (general-define-key
  :states '(normal insert)
  :keymaps 'vterm-mode-map
- "<f1>" 'my-vterm-clear
- "<f15> e" (ilm (vt-insert-command "echo "))
- "<f15> x" 'vt-add-chmod
- "<f15> C" 'vterm-copy-mode-map
- "<f15> s" 'vt-add-sudo
- "<f15> H" (ilm (vt-cd-to "~") (vt-ls))
- "<f15> P" (ilm (vt-cd-to "~/projects") (vt-ls))
- "<f15> e" (ilm (vt-insert-command "echo "))
- "<f15> R" (ilm (vt-cd-to "~/repos") (vt-ls))
- "<f15> O" (ilm (vt-cd-to "~/org") (vt-ls))
- "<f15> B" (ilm (vt-cd-to "~/notebooks") (vt-ls))
- "<f15> S" (ilm (vt-cd-to "~/scrap") (vt-ls)))
+ :prefix "<f14>"
+ "e" (ilm (vt-insert-command "echo "))
+ "x" 'vt-add-chmod
+ "c" 'vterm-copy-mode-map
+ "s" 'vt-add-sudo)
+
+(general-define-key
+ :states  'insert
+ :keymaps 'vterm-mode-map
+ "<f1>" 'rubicon/vterm-clear)
+
+(general-define-key
+ :states 'insert
+ :keymaps 'vterm-mode-map
+ :prefix "<f15>"
+ "H" (ilm (vt-cd-to "~") (vt-ls))
+ "P" (ilm (vt-cd-to "~/projects") (vt-ls))
+ "R" (ilm (vt-cd-to "~/repos") (vt-ls))
+ "O" (ilm (vt-cd-to "~/org") (vt-ls))
+ "B" (ilm (vt-cd-to "~/notebooks") (vt-ls))
+ "S" (ilm (vt-cd-to "~/scrap") (vt-ls)))
 
 (general-define-key
  :states 'normal

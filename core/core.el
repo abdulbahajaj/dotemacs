@@ -299,13 +299,13 @@ The point of this is to avoid Emacs locking up indexing massive file trees."
   (evil-insert 1))
 
 ;;;###autoload
-(defun my-vterm-append ()
+(defun rubicon/vterm-append ()
   (interactive)
   (vterm-copy-mode -1)
   (evil-append 1))
 
 ;;;###autoload
-(defun my-vterm-clear ()
+(defun rubicon/vterm-clear ()
   (interactive)
   (vterm-clear-scrollback)
   (vterm-clear))
