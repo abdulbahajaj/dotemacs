@@ -85,7 +85,7 @@
 			       "* %?\nEntered on %U\n"))
       org-habit-show-habits-only-for-today nil
       org-agenda-files (list rubicon/org-dir-path)
-      org-indent-indentation-per-level 1
+      org-indent-indentation-per-level 2
       org-src-preserve-indentation t
       org-agenda-include-deadlines t
       org-src-tab-acts-natively t
