@@ -445,5 +445,7 @@ to `magit-dispatch'."
                           (agenda . 5)
                           (registers . 5))))
 
+(use-package go-mode)
+
 (provide 'packages)
 ;;; packages.el ends here
