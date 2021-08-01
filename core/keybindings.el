@@ -127,10 +127,11 @@
 
     "d" 'rubicon/create-disposable-dir
 
+    "w w" #'rubicon/create-org-writing
     ;; Narrow and widen
     "w r" #'narrow-to-region
     "w p" #'narrow-to-page
-    "w w" #'widen
+    "w d" #'widen
     "w f" #'narrow-to-defun
     "w b" #'org-narrow-to-block
     "w s" #'org-narrow-to-subtree

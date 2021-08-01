@@ -548,6 +548,10 @@ If on a:
 	   (call-interactively #'org-open-at-point)
 	 (+org--refresh-inline-images-in-subtree))))))
 
+(defun rubicon/create-org-writing ()
+  (interactive)
+  (e (format "%s/writings/%s.org" rubicon/org-dir-path (rubicon/gen-random-str))))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Modeline 
@@ -596,6 +600,7 @@ If on a:
 (defun rubicon/edit-last-kill ()
   (interactive)
   (e (car kill-ring)))
+
 
 (provide 'core)
 ;;; core.el ends here
