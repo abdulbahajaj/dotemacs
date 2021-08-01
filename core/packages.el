@@ -229,9 +229,9 @@ to `magit-dispatch'."
 (use-package ob-async)
 
 (use-package  highlight-thing
-  :hook (prog-mode . highlight-thing-mode)
   :config
-  (setq highlight-thing-delay-seconds 0))
+  (setq highlight-thing-delay-seconds 0)
+  (global-highlight-thing-mode))
 
 (use-package treemacs
   :config
