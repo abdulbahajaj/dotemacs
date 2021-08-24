@@ -56,6 +56,7 @@
 (use-package evil-embrace
   :config
   (evil-embrace-enable-evil-surround-integration))
+
 (use-package evil-snipe
   :config
   (evil-snipe-mode +1)
@@ -384,7 +385,6 @@ to `magit-dispatch'."
 
 (use-package git-gutter-fringe
   :config
-
   (define-fringe-bitmap 'git-gutter-fr:added [224]
     nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224]
@@ -434,16 +434,6 @@ to `magit-dispatch'."
 (use-package lsp-pyright
   :config
   (require 'lsp-pyright))
-
-(use-package dashboard
-  :ensure t
-  :config
-  (dashboard-setup-startup-hook)
-  (setq dashboard-items '((recents  . 5)
-                          (bookmarks . 5)
-                          (projects . 5)
-                          (agenda . 5)
-                          (registers . 5))))
 
 (use-package go-mode)
 
