@@ -27,6 +27,7 @@
 (setq-default fringes-outside-margins t)
 
 (setq show-paren-style 'parenthesis
+      cider-print-buffer-size (* 10  1024)
       window-divider-default-bottom-width 1
       window-divider-default-right-width 1
       display-time-24hr-format t
