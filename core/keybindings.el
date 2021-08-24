@@ -221,10 +221,7 @@
  "c" 'vterm-copy-mode-map
  "s" 'vt-add-sudo)
 
-(general-define-key
- :states  'insert
- :keymaps 'vterm-mode-map
- "<f1>" 'rubicon/vterm-clear)
+
 
 (general-define-key
  :states 'insert
@@ -269,8 +266,8 @@
  "S-<return>" 'vterm-run-and-go-up
  "M-<f13>" 'vt-rc
  "<f13>" 'vterm-send-C-c
- "<f14>" 'vterm-send-escape)
-
+ "<f14>" 'vterm-send-escape
+ "<f1>" 'rubicon/vterm-clear)
 
 
 
@@ -358,6 +355,11 @@
 
  "h" 'cider-debug-move-here)
 
+(general-define-key
+ :keymaps 'cider-repl-mode-map
+ :states 'insert
+ "<f13>" 'cider-repl-kill-input
+ "<f1>" 'cider-repl-clear-buffer)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;; Python
