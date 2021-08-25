@@ -18,10 +18,9 @@
 (defun rubicon/load (path)
   (load (concat user-emacs-directory path)))
 
-(rubicon/load "core/packages")
-(rubicon/load "core/core")
-(rubicon/load "core/config")
-(rubicon/load "core/keybindings")
+(dolist (fname '("core/packages" "core/core" "core/config" "core/keybindings"))
+  (rubicon/load fname))
+
 
 (if (file-exists-p (concat user-emacs-directory "local.el"))
     (rubicon/load  "local")

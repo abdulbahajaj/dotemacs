@@ -422,8 +422,8 @@ to `magit-dispatch'."
 (use-package pyimport)
 (use-package python-pytest)
 (use-package pip-requirements)
+;;(use-package flycheck-pyflakes)
 
-(use-package flycheck-pyflakes)
 (use-package py-isort)
 
 (use-package lsp-mode
