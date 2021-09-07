@@ -418,5 +418,15 @@
  "e" #'eval-last-sexp
  "E" #'eval-buffer)
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;; Comint
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(general-define-key
+ :keymaps 'comint-mode-map
+ "<f1>" 'comint-clear-buffer
+ "<f13>" 'comint-kill-input)
+
 (provide 'keybindings)
 ;;; keybindings.el ends here
