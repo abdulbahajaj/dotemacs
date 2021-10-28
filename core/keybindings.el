@@ -34,6 +34,9 @@
  "("          'evil-scroll-down
  ")"          'evil-scroll-up
 
+ ;; buff switching
+ "S-<left>"     'persp-next
+ "S-<right>"    'persp-prev
  ;; split
  "<down>"     'evil-window-down
  "<left>"     'evil-window-left
