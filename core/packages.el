@@ -220,7 +220,9 @@ to `magit-dispatch'."
 	ivy-use-selectable-prompt t
 	ivy-count-format "%d/%d")
   (setf (alist-get 't ivy-format-functions-alist)
-	#'ivy-format-function-line))
+	#'ivy-format-function-line)
+  (add-to-list 'ivy-sort-functions-alist
+             '(counsel-recentf . file-newer-than-file-p)))
 
 (use-package ivy-prescient
   :after counsel
