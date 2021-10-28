@@ -4,6 +4,8 @@
 
 (set-face-attribute 'fringe nil :background "#000")
 
+(set-face-attribute 'default 'nil :height 200)
+
 (dolist (enabled-fringe-in-mode '(prog-mode-hook
 				  magit-status-mode-hook
 				  eshell-mode-hook))
