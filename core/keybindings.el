@@ -35,9 +35,13 @@
  ")"          'evil-scroll-up
 
  ;; buff switching
+ "S-<down>"     'rubicon/switch-to-last-persp
+ "S-<up>"    'rubicon/switch-to-first-persp
  "S-<left>"     'persp-prev
  "S-<right>"    'persp-next
  ","    (ilm (switch-to-buffer (persp-other-buffer (current-buffer))))
+ "s-,"    'persp-switch-last
+ 
 
  ;; split
  "<down>"     'evil-window-down

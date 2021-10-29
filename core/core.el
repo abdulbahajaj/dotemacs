@@ -188,6 +188,16 @@ the only window, use evil-window-move-* (e.g. `evil-window-move-far-left')."
   (rubicon/kill-selected-buffers
    (rubicon/workspace-current-get-other-buffers)))
 
+(defun rubicon/switch-to-first-persp ()
+  ((interactive))
+  (persp-switch (car (persp-names))))
+
+(defun rubicon/switch-to-last-persp ()
+  (interactive)
+  (persp-switch (car (last (persp-names)))))
+
+
+
 ;;;###autoload
 (defun rubicon/print-and-copy (val)
   (message val)
