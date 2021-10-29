@@ -189,7 +189,7 @@ the only window, use evil-window-move-* (e.g. `evil-window-move-far-left')."
    (rubicon/workspace-current-get-other-buffers)))
 
 (defun rubicon/switch-to-first-persp ()
-  ((interactive))
+  (interactive)
   (persp-switch (car (persp-names))))
 
 (defun rubicon/switch-to-last-persp ()
