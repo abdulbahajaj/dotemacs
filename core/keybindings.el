@@ -41,6 +41,7 @@
  "S-<right>"    'persp-next
  ","    (ilm (switch-to-buffer (persp-other-buffer (current-buffer))))
  "s-,"    'persp-switch-last
+ "s-o"    'persp-kill-others
  
 
  ;; split
