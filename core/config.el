@@ -228,5 +228,13 @@
  `(("^[ \t]*\\(?:[-+*]\\|[0-9]+[).]\\)[ \t]+\\(\\(?:\\[@\\(?:start:\\)?[0-9]+\\][ \t]*\\)?\\[\\(?:X\\|\\([0-9]+\\)/\\2\\)\\][^\n]*\n\\)" 1 'org-headline-done prepend))
  'append)
 
+(multi-advice rubicon/show-workspaces :after
+	      (list 'persp-switch
+		    'persp-prev
+		    'persp-next
+		    'persp-kill)
+	      (&rest _)
+	      (rubicon/workspace-show-all))
+
 (provide 'config)
 ;;; config.el ends here

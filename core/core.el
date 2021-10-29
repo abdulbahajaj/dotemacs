@@ -101,16 +101,15 @@ the only window, use evil-window-move-* (e.g. `evil-window-move-far-left')."
     (e path)))
 
 ;;;###autoload
-(defun rubicon/workspace-switch (name)
-  (interactive)
-  (persp-switch name)
-  (rubicon/workspace-show-all))
+(defmacro multi-advice (name where fn-list args &rest body)
+  `(progn
+     (defun ,name ,args ,@body)
+     (--map (advice-add it ,where (quote ,name)) ,fn-list)))
 
 ;;;###autoload
 (defun rubicon/workspace-delete ()
   (interactive)
-  (persp-kill (persp-current-name))
-  (rubicon/workspace-show-all))
+  (persp-kill (persp-current-name)))
 
 ;;;###autoload
 (defun rubicon/workspace-get-marked-list ()

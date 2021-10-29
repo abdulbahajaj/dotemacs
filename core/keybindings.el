@@ -57,7 +57,7 @@
     "O" 'rubicon/workspace-kill-other-buffers
 
     ,@(-flatten-n 1 (--map (let ((str-num (number-to-string it)))
-			     (list str-num `(ilm (rubicon/workspace-switch ,str-num))))
+			     (list str-num `(ilm (persp-switch ,str-num))))
 			   (number-sequence 1 9)))
     
     "n" #'replel-start-repl
