@@ -24,6 +24,7 @@
 			show-paren-mode))
   (funcall turn-on-mode 1))
 
+(setq-default recentf-max-saved-items nil)
 (setq-default display-line-numbers-width 3)
 (setq-default org-agenda-span 'month)
 (setq-default fringes-outside-margins t)
