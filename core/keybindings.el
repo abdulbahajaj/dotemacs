@@ -35,8 +35,10 @@
  ")"          'evil-scroll-up
 
  ;; buff switching
- "S-<left>"     'persp-next
- "S-<right>"    'persp-prev
+ "S-<left>"     'persp-prev
+ "S-<right>"    'persp-next
+ ","    (ilm (switch-to-buffer (persp-other-buffer (current-buffer))))
+
  ;; split
  "<down>"     'evil-window-down
  "<left>"     'evil-window-left
