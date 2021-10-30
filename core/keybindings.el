@@ -43,6 +43,8 @@
  "s-,"    'persp-switch-last
  "s-o"    'persp-kill-others
  "s-n"    'rubicon/workspace-new
+ "s-m"    'rubicon/workspace-show-all
+ "s-d"    'rubicon/workspace-delete
  
  ;; split
  "<down>"     'evil-window-down
