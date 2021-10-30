@@ -103,7 +103,7 @@
   (interactive)
   (persp-kill (persp-current-name)))
 
- (workspace-get-last-name
+ (workspace-get-last-selected-buffer-name
   (persp-name)
   (save-window-excursion
     (progn
@@ -120,7 +120,11 @@
   (let ((cur-persp-name (persp-current-name)))
     (--map
      (let ((persp-display-name
-	    (concat " " it ":" (rubicon/workspace-get-last-name it) " ")))
+	    (concat " " it ":"
+		    (-> it
+			rubicon/workspace-get-last-selected-buffer-name
+			(truncate-string-to-width 15))
+		    " ")))
        (propertize persp-display-name
 		   'face
 		   (list ':background (if (string= cur-persp-name it) "#0d5a91" nil) ;; "#0d5a91"
