@@ -103,19 +103,37 @@
   (interactive)
   (persp-kill (persp-current-name)))
 
+ (workspace-get-last-name
+  (persp-name)
+  (save-window-excursion
+    (progn
+      (->> (perspectives-hash)
+	   (gethash persp-name)
+	   persp-window-configuration
+	   set-window-configuration)
+      (->> (current-buffer)
+	   buffer-name
+	   string-trim))))
+
  (workspace-get-marked-list
   ()
-  (--map
-   (if (string= (persp-current-name) it)
-       (concat ">" it "<")
-     (concat " " it " "))
-   (persp-names)))
+  (let ((cur-persp-name (persp-current-name)))
+    (--map
+     (let ((persp-display-name
+	    (concat " " it ":" (rubicon/workspace-get-last-name it) " ")))
+       (propertize persp-display-name
+		   'face
+		   (list ':background (if (string= cur-persp-name it) "#0d5a91" nil) ;; "#0d5a91"
+			 ':weight 'ultra-bold)))
+     (persp-names))))
+
+ ;; (propertize "foo" 'face '(:background "red"))
 
  (workspace-show-all
   ()
   (interactive)
   (message
-   (string-join (rubicon/workspace-get-marked-list) " ")))
+   (apply 'concat (rubicon/workspace-get-marked-list))))
 
  (workspace-is-last-buffer?
   ()
