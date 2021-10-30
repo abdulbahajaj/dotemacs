@@ -144,6 +144,19 @@
   (interactive)
   (not (> (length (persp-current-buffer-names)) 1)))
 
+ (workspace-new
+  ()
+  (interactive)
+  (let ((new-workspace-num
+	 (->> (persp-names)
+	      last
+	      car
+	      string-to-number
+	      (+ 1))))
+    (if (> new-workspace-num 9)
+	(message "There can only be 9 workspaces")
+      (persp-switch (number-to-string new-workspace-num)))))
+
  (workspace-kill-current-buffer
   ()
   (interactive)

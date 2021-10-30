@@ -42,6 +42,7 @@
  ","    (ilm (switch-to-buffer (persp-other-buffer (current-buffer))))
  "s-,"    'persp-switch-last
  "s-o"    'persp-kill-others
+ "s-n"    'rubicon/workspace-new
  
  ;; split
  "<down>"     'evil-window-down
