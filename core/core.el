@@ -6,8 +6,21 @@
      (interactive)
      ,@body))
 
-;;;###autoload
-(defun rubicon/escape ()
+(defun rubicon/add-fn (name args &rest body)
+  `(defun ,name ,args ,@body))
+
+(defmacro ns (namespace &rest defs)
+  (let ((namespace (concat (symbol-name namespace) "/")))
+    `(progn
+       ,@(--map (apply 'rubicon/add-fn
+		       (intern (concat namespace (symbol-name (car it))))
+		       (cdr it))
+		defs))))
+
+(ns
+ rubicon
+ (escape
+  ()
   (interactive)
   (evil-ex-nohighlight)
   (cond ((minibuffer-window-active-p (minibuffer-window))
@@ -17,10 +30,8 @@
 	((or defining-kbd-macro executing-kbd-macro) nil)
 	;; Back to the default
 	((keyboard-quit))))
-
-;; split creation and navigation
-;;;###autoload
-(defun rubicon/split-window (pos)
+ (split-window
+  (pos)
   (cond ((string= pos "right")
 	 (split-window-horizontally)
 	 (evil-window-right 1))
@@ -32,10 +43,169 @@
 	((string= pos "up")
 	 (split-window-vertically))))
 
+ ;; Modeline
+ (enable-modeline
+  ()
+  (setq mode-line-format rubicon--modeline-format))
+ (disable-modeline
+  ()
+  (setq mode-line-format nil))
+ (modeline-face
+  (inherits background-color)
+  `((t :inherit ,inherits
+       :background ,background-color
+       :box (:line-width 1 :color ,background-color)
+       :height 130)))
+ (relative-default-dir
+  ()
+  (s-replace-regexp  rubicon--home-path-rg-starts-with
+		     "~"
+		     default-directory))
+ (turn-fringes-off
+  ()
+  (setq-local left-fringe-width 0
+	      right-fringe-width 0))
+ (turn-fringes-on
+  ()
+  (let ((width 8))
+    (setq-local left-fringe-width width
+		right-fringe-width 0) 
+    (set-window-fringes nil width nil)))
+ (copy-git-link-at-point
+  ()
+  (interactive)
+  (rubicon/print-and-copy (browse-at-remote-get-url)))
+ (edit-last-kill
+  ()
+  (interactive)
+  (e (car kill-ring)))
+ (get-org-path
+  (org-file)
+  (format "%s/%s" rubicon/org-dir-path org-file))
+ (create-org-writing
+  ()
+  (interactive)
+  (e (format "%s/writings/%s.org" rubicon/org-dir-path (rubicon/gen-random-str))))
 
-;; Doom helper functions
-;;;###autoload
-(defun +evil--window-swap (direction)
+ (gen-random-str
+  ()
+  (--reduce (format "%s%d" acc (random 10000)) (number-sequence 0 8)))
+
+ (create-disposable-dir
+  ()
+  (interactive)
+  (let ((path (format "~/scrap/%s" (rubicon/gen-random-str))))
+    (dired-create-directory path)
+    (e path)))
+
+ (workspace-delete
+  ()
+  (interactive)
+  (persp-kill (persp-current-name)))
+
+ (workspace-get-marked-list
+  ()
+  (--map
+   (if (string= (persp-current-name) it)
+       (concat ">" it "<")
+     (concat " " it " "))
+   (persp-names)))
+
+ (workspace-show-all
+  ()
+  (interactive)
+  (message
+   (string-join (rubicon/workspace-get-marked-list) " ")))
+
+ (workspace-is-last-buffer?
+  ()
+  (interactive)
+  (not (> (length (persp-current-buffer-names)) 1)))
+
+ (workspace-kill-current-buffer
+  ()
+  (interactive)
+  (if (not (rubicon/workspace-is-last-buffer?))
+      (kill-current-buffer)
+    (message "Can't delete last workspace buffer")))
+
+ (workspace-quit-window
+  ()
+  (interactive)
+  (if (not (rubicon/workspace-is-last-buffer?))
+      (quit-window)
+    (message "Can't delete last workspace buffer")))
+
+ (visible-buffers
+  ()
+  "Returns a list of all currently visible buffers"
+  (mapcar 'window-buffer (window-list)))
+
+ (workspace-current-get-all-buffers
+  ()
+  "Returns a list of all buffers in current perspective"
+  (persp-current-buffers))
+
+ (workspace-current-get-invisible-buffers
+  ()
+  "returns a list of all invisible buffers in current perspective"
+  (-difference (rubicon/workspace-current-get-all-buffers)
+	       (rubicon/visible-buffers)))
+
+ (kill-selected-buffers
+  (selected-buffers)
+  "Kills all buffers given to it"
+  (--map (kill-buffer it) selected-buffers))
+
+ (workspace-current-get-other-buffers
+  ()
+  "Get buffers other than the current buffers in the current perspective"
+  (-difference
+   (rubicon/workspace-current-get-all-buffers)
+   (list (current-buffer))))
+
+ (workspace-kill-invisible-buffers
+  ()
+  "Kills all invisible buffers in perspective"
+  (interactive)
+  (rubicon/kill-selected-buffers
+   (rubicon/workspace-current-get-invisible-buffers)))
+
+ (workspace-kill-other-buffers
+  ()
+  "Kills all buffers other than current one in perspective"
+  (interactive)
+  (delete-other-windows)
+  (rubicon/kill-selected-buffers
+   (rubicon/workspace-current-get-other-buffers)))
+
+ (switch-to-first-persp
+  ()
+  (interactive)
+  (persp-switch (car (persp-names))))
+
+ (switch-to-last-persp
+  ()
+  (interactive)
+  (persp-switch (car (last (persp-names)))))
+
+ (print-and-copy
+  (val)
+  (message val)
+  (kill-new val))
+
+ (copy-path-to-buffer-file
+  ()
+  (interactive)
+  (rubicon/print-and-copy
+   (or (buffer-file-name) default-directory)))
+
+
+ 
+
+
+ (window-swap
+  (direction)
   "Move current window to the next window in DIRECTION.
 If there are no windows there and there is only one window, split in that
 direction and place this window there. If there are no windows and this isn't
@@ -69,36 +239,25 @@ the only window, use evil-window-move-* (e.g. `evil-window-move-far-left')."
 	(switch-to-buffer this-buffer))
       (select-window that-window))))
 
-;;;###autoload
-(defun +evil/window-move-left ()
-  "Swap windows to the left."
-  (interactive) (+evil--window-swap 'left))
+ (window-move-left ()
+		   "Swap windows to the left."
+		   (interactive) (rubicon/window-swap 'left))
 
-;;;###autoload
-(defun +evil/window-move-right ()
+ (window-move-right
+  ()
   "Swap windows to the right"
-  (interactive) (+evil--window-swap 'right))
+  (interactive) (rubicon/window-swap 'right))
 
-;;;###autoload
-(defun +evil/window-move-up ()
+ (window-move-up
+  ()
   "Swap windows upward."
-  (interactive) (+evil--window-swap 'up))
+  (interactive) (rubicon/window-swap 'up))
 
-;;;###autoload
-(defun +evil/window-move-down ()
+ (window-move-down
+  ()
   "Swap windows downward."
-  (interactive) (+evil--window-swap 'down))
+  (interactive) (rubicon/window-swap 'down)))
 
-;;;###autoload
-(defun rubicon/gen-random-str ()
-  (--reduce (format "%s%d" acc (random 10000)) (number-sequence 0 8)))
-
-;;;###autoload
-(defun rubicon/create-disposable-dir ()
-  (interactive)
-  (let ((path (format "~/scrap/%s" (rubicon/gen-random-str))))
-    (dired-create-directory path)
-    (e path)))
 
 ;;;###autoload
 (defmacro multi-advice (name where fn-list args &rest body)
@@ -106,108 +265,6 @@ the only window, use evil-window-move-* (e.g. `evil-window-move-far-left')."
      (defun ,name ,args ,@body)
      (--map (advice-add it ,where (quote ,name)) ,fn-list)))
 
-;;;###autoload
-(defun rubicon/workspace-delete ()
-  (interactive)
-  (persp-kill (persp-current-name)))
-
-;;;###autoload
-(defun rubicon/workspace-get-marked-list ()
-  (--map
-   (if (string= (persp-current-name) it)
-       (concat ">" it "<")
-     (concat " " it " "))
-   (persp-names)))
-
-;;;###autoload
-(defun rubicon/workspace-show-all ()
-  (interactive)
-  (message
-   (string-join (rubicon/workspace-get-marked-list) " ")))
-
-;;;###autoload
-(defun rubicon/workspace-is-last-buffer? ()
-  (interactive)
-  (not (> (length (persp-current-buffer-names)) 1)))
-
-;;;###autoload
-(defun rubicon/workspace-kill-current-buffer ()
-  (interactive)
-  (if (not (rubicon/workspace-is-last-buffer?))
-      (kill-current-buffer)
-    (message "Can't delete last workspace buffer")))
-
-;;;###autoload
-(defun rubicon/workspace-quit-window ()
-  (interactive)
-  (if (not (rubicon/workspace-is-last-buffer?))
-      (quit-window)
-    (message "Can't delete last workspace buffer")))
-
-;;;###autoload
-(defun rubicon/visible-buffers ()
-  "Returns a list of all currently visible buffers"
-  (mapcar 'window-buffer (window-list)))
-
-;;;###autoload
-(defun rubicon/workspace-current-get-all-buffers ()
-  "Returns a list of all buffers in current perspective"
-  (persp-current-buffers))
-
-;;;###autoload
-(defun rubicon/workspace-current-get-invisible-buffers ()
-  "returns a list of all invisible buffers in current perspective"
-  (-difference (rubicon/workspace-current-get-all-buffers)
-	       (rubicon/visible-buffers)))
-
-;;;###autoload
-(defun rubicon/kill-selected-buffers (selected-buffers)
-  "Kills all buffers given to it"
-  (--map (kill-buffer it) selected-buffers))
-
-
-;;;###autoload
-(defun rubicon/workspace-current-get-other-buffers ()
-  "Get buffers other than the current buffers in the current perspective"
-  (-difference
-   (rubicon/workspace-current-get-all-buffers)
-   (list (current-buffer))))
-
-;;;###autoload
-(defun rubicon/workspace-kill-invisible-buffers ()
-  "Kills all invisible buffers in perspective"
-  (interactive)
-  (rubicon/kill-selected-buffers
-   (rubicon/workspace-current-get-invisible-buffers)))
-
-;;;###autoload
-(defun rubicon/workspace-kill-other-buffers ()
-  "Kills all buffers other than current one in perspective"
-  (interactive)
-  (delete-other-windows)
-  (rubicon/kill-selected-buffers
-   (rubicon/workspace-current-get-other-buffers)))
-
-(defun rubicon/switch-to-first-persp ()
-  (interactive)
-  (persp-switch (car (persp-names))))
-
-(defun rubicon/switch-to-last-persp ()
-  (interactive)
-  (persp-switch (car (last (persp-names)))))
-
-
-
-;;;###autoload
-(defun rubicon/print-and-copy (val)
-  (message val)
-  (kill-new val))
-
-;;;###autoload
-(defun rubicon/copy-path-to-buffer-file ()
-  (interactive)
-  (rubicon/print-and-copy
-   (or (buffer-file-name) default-directory)))
 
 ;; Key bindings functions
 
@@ -453,9 +510,6 @@ The point of this is to avoid Emacs locking up indexing massive file trees."
 	     if (member keyword keywords)
 	     return keywords)))
 
-(defun rubicon/get-org-path (org-file)
-  (format "%s/%s" rubicon/org-dir-path org-file))
-
 ;;;###autoload
 (defun +org/dwim-at-point (&optional arg)
   "Do-what-I-mean at point.
@@ -556,60 +610,6 @@ If on a:
 	       (org-in-regexp org-link-any-re nil t))
 	   (call-interactively #'org-open-at-point)
 	 (+org--refresh-inline-images-in-subtree))))))
-
-(defun rubicon/create-org-writing ()
-  (interactive)
-  (e (format "%s/writings/%s.org" rubicon/org-dir-path (rubicon/gen-random-str))))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; Modeline 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;###autoload
-(defun rubicon/enable-modeline ()
-  (setq mode-line-format rubicon--modeline-format))
-
-;;;###autoload
-(defun rubicon/disable-modeline ()
-  (setq mode-line-format nil))
-
-;;;###autoload
-(defun rubicon--modeline-face (inherits background-color)
-  `((t :inherit ,inherits
-       :background ,background-color
-       :box (:line-width 1 :color ,background-color)
-       :height 130)))
-
-;;;###autoload
-(defun rubicon/relative-default-dir ()
-  (s-replace-regexp  rubicon--home-path-rg-starts-with
-		     "~"
-		     default-directory))
-
-;;;###autoload
-(defun rubicon/turn-fringes-off ()
-  (setq-local left-fringe-width 0
-	      right-fringe-width 0))
-
-;;;###autoload
-(defun rubicon/turn-fringes-on ()
-  (let ((width 8))
-    (setq-local left-fringe-width width
-		right-fringe-width 0) 
-    (set-window-fringes nil width nil)))
-
-
-;;;###autoload
-(defun rubicon/copy-git-link-at-point ()
-  (interactive)
-  (rubicon/print-and-copy (browse-at-remote-get-url)))
-
-
-(defun rubicon/edit-last-kill ()
-  (interactive)
-  (e (car kill-ring)))
-
 
 (provide 'core)
 ;;; core.el ends here

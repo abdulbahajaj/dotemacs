@@ -175,10 +175,10 @@
 
 
 (rubicon/leader-<f13>
-  "<right>" #'+evil/window-move-right
-  "<up>" #'+evil/window-move-up
-  "<left>" #'+evil/window-move-left
-  "<down>" #'+evil/window-move-down)
+  "<right>" #'rubicon/window-move-right
+  "<up>" #'rubicon/window-move-up
+  "<left>" #'rubicon/window-move-left
+  "<down>" #'rubicon/window-move-down)
 
 (general-define-key
  :keymaps 'org-mode-map

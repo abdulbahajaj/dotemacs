@@ -200,11 +200,11 @@
   (add-hook enable-modeline-mode-hook 'rubicon/enable-modeline))
 
 (defface rubicon-modeline-active
-  (rubicon--modeline-face 'mode-line "#ebebeb")
+  (rubicon/modeline-face 'mode-line "#ebebeb")
   "Face used when modeline is enabled and active"
   :group 'rubicon-faces)
 (defface rubicon-modeline-inactive
-  (rubicon--modeline-face 'mode-line-inactive  "#212121")
+  (rubicon/modeline-face 'mode-line-inactive  "#212121")
   "Face used when modeline is enabled and inactive"
   :group 'rubicon-faces)
 
