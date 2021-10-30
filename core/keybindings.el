@@ -43,135 +43,133 @@
  "s-,"    'persp-switch-last
  "s-o"    'persp-kill-others
  
-
  ;; split
  "<down>"     'evil-window-down
  "<left>"     'evil-window-left
  "<up>"       'evil-window-up
  "<right>"    'evil-window-right)
 
-(eval
- `(rubicon/leader-SPC
-    "<ESC>" #'delete-window
+(--map (let ((str-num (number-to-string it)))
+	 (global-set-key (kbd (format "s-%s" str-num)) (ilm (persp-switch str-num))))
+       (number-sequence 1 9))
 
-    "q q" 'restart-emacs
+(rubicon/leader-SPC
+  "<ESC>" #'delete-window
 
-    ;; Workspaces
-    "TAB d" 'rubicon/workspace-delete
-    "TAB TAB" 'rubicon/workspace-show-all
-    "TAB s" 'persp-switch 
-    "o" 'rubicon/workspace-kill-invisible-buffers
-    "O" 'rubicon/workspace-kill-other-buffers
+  "q q" 'restart-emacs
 
-    ,@(-flatten-n 1 (--map (let ((str-num (number-to-string it)))
-			     (list str-num `(ilm (persp-switch ,str-num))))
-			   (number-sequence 1 9)))
-    
-    "n" #'replel-start-repl
-    "N" #'replel-overview
-    "D" #'docker
-    "s" #'save-buffer
-    "t" 'rubicon/eshell-here
+  ;; Workspaces
+  "TAB d" 'rubicon/workspace-delete
+  "TAB TAB" 'rubicon/workspace-show-all
+  "TAB s" 'persp-switch 
+  "o" 'rubicon/workspace-kill-invisible-buffers
+  "O" 'rubicon/workspace-kill-other-buffers
 
-    "T" #'vterm
-    "R" #'ielm
-    "r" #'counsel-recentf
-    
-    "B" #'evil-buffer-new
-    "b" #'browse-at-remote
-    "y" 'rubicon/copy-path-to-buffer-file
-    "Y g" 'git-link-homepage
-    "Y y" 'rubicon/copy-git-link-at-point
-    
-    "." 'counsel-find-file
-    "," 'persp-counsel-switch-buffer
+  "n" #'replel-start-repl
+  "N" #'replel-overview
+  "D" #'docker
+  "s" #'save-buffer
+  "t" 'rubicon/eshell-here
 
-    "h y" 'yas-describe-tables
-    "h w" #'what-cursor-position
-    "h o" #'find-function-on-key
-    "h f" #'find-function
-    "h v" #'find-variable
-    "h r" #'describe-variable
-    "h k" #'describe-key
-    "h m" #'describe-mode
-    "h e" #'describe-face
-    "h n" #'describe-font
-    "h c" #'describe-char
-    "h t" #'describe-theme
-    "h a" #'describe-keymap
-    "h s" #'describe-symbol
-    "h b" #'describe-binding
-    "h F" #'describe-fontset
-    "a a" #'org-agenda-list
-    "a t" #'org-todo-list
-    "c" #'org-capture
-    "C" #'comint-run
-    
-    "g" #'magit-file-dispatch
-    "G" #'magit-dispatch
-    "l" #'magit-log-current
+  "T" #'vterm
+  "R" #'ielm
+  "r" #'counsel-recentf
+  
+  "B" #'evil-buffer-new
+  "b" #'browse-at-remote
+  "y" 'rubicon/copy-path-to-buffer-file
+  "Y g" 'git-link-homepage
+  "Y y" 'rubicon/copy-git-link-at-point
+  
+  "." 'counsel-find-file
+  "," 'persp-counsel-switch-buffer
 
-    ;; killing and yanking
-    "p p" 'browse-kill-ring
-    "p 1" (ilm (yank 2))
+  "h y" 'yas-describe-tables
+  "h w" #'what-cursor-position
+  "h o" #'find-function-on-key
+  "h f" #'find-function
+  "h v" #'find-variable
+  "h r" #'describe-variable
+  "h k" #'describe-key
+  "h m" #'describe-mode
+  "h e" #'describe-face
+  "h n" #'describe-font
+  "h c" #'describe-char
+  "h t" #'describe-theme
+  "h a" #'describe-keymap
+  "h s" #'describe-symbol
+  "h b" #'describe-binding
+  "h F" #'describe-fontset
+  "a a" #'org-agenda-list
+  "a t" #'org-todo-list
+  "c" #'org-capture
+  "C" #'comint-run
+  
+  "g" #'magit-file-dispatch
+  "G" #'magit-dispatch
+  "l" #'magit-log-current
 
-    ;; Projectile
-    "p a" 'projectile-add-known-project
-    "p s" 'projectile-switch-project
-    "p r" 'projectile-replace
-    "p k" 'projectile-kill-buffers
-    
-    ;; SMERGE
-    "k u" #'smerge-keep-upper
-    "k l" #'smerge-keep-lower
-    "k a" #'smerge-keep-all
-    "k n" #'smerge-next
-    "k p" #'smerge-prev
-    "k m" #'smerge-keep-mine
+  ;; killing and yanking
+  "p p" 'browse-kill-ring
+  "p 1" (ilm (yank 2))
 
-    "P" #'proced
+  ;; Projectile
+  "p a" 'projectile-add-known-project
+  "p s" 'projectile-switch-project
+  "p r" 'projectile-replace
+  "p k" 'projectile-kill-buffers
+  
+  ;; SMERGE
+  "k u" #'smerge-keep-upper
+  "k l" #'smerge-keep-lower
+  "k a" #'smerge-keep-all
+  "k n" #'smerge-next
+  "k p" #'smerge-prev
+  "k m" #'smerge-keep-mine
 
-    "SPC" '+ivy/projectile-find-file
-    "'" 'ivy-resume
+  "P" #'proced
 
-    "d" 'rubicon/create-disposable-dir
+  "SPC" '+ivy/projectile-find-file
+  "'" 'ivy-resume
 
-    "w w" #'rubicon/create-org-writing
-    ;; Narrow and widen
-    "w r" #'narrow-to-region
-    "w p" #'narrow-to-page
-    "w d" #'widen
-    "w f" #'narrow-to-defun
-    "w b" #'org-narrow-to-block
-    "w s" #'org-narrow-to-subtree
-    "w e" #'org-narrow-to-element
+  "d" 'rubicon/create-disposable-dir
 
-    "z"  (ilm (evil-edit "."))
-    "Z" #'treemacs-select-window
-    "<right>" (ilm (rubicon/split-window "right"))
-    "<up>" (ilm (rubicon/split-window "up"))
-    "<left>" (ilm (rubicon/split-window "left"))
-    "<down>" (ilm (rubicon/split-window "down"))
+  "w w" #'rubicon/create-org-writing
+  ;; Narrow and widen
+  "w r" #'narrow-to-region
+  "w p" #'narrow-to-page
+  "w d" #'widen
+  "w f" #'narrow-to-defun
+  "w b" #'org-narrow-to-block
+  "w s" #'org-narrow-to-subtree
+  "w e" #'org-narrow-to-element
 
-    ;; surround 
-    "<f1> e" #'evil-embrace-evil-surround-change
-    "<f1> d" #'evil-embrace-evil-surround-delete
-    "<f1> r" #'evil-embrace-evil-surround-region
-    
+  "z"  (ilm (evil-edit "."))
+  "Z" #'treemacs-select-window
+  "<right>" (ilm (rubicon/split-window "right"))
+  "<up>" (ilm (rubicon/split-window "up"))
+  "<left>" (ilm (rubicon/split-window "left"))
+  "<down>" (ilm (rubicon/split-window "down"))
 
-    "i" #'rubicon/edit-last-kill
+  ;; surround 
+  "<f1> e" #'evil-embrace-evil-surround-change
+  "<f1> d" #'evil-embrace-evil-surround-delete
+  "<f1> r" #'evil-embrace-evil-surround-region
+  
 
-    ;; Debugger 
-    "TAB r" #'dap-debug
-    "TAB n" #'dap-next
-    "TAB t" #'dap-disconnect
-    "TAB i" #'dap-step-in
-    "TAB o" #'dap-step-out
-    "TAB c" #'dap-continue
-    "TAB l" #'dap-ui-locals
-    "TAB R" #'dap-ui-repl
-    "TAB B" #'dap-ui-breakpoints-list
-    "TAB b" #'dap-breakpoint-toggle))
+  "i" #'rubicon/edit-last-kill
+
+  ;; Debugger 
+  "TAB r" #'dap-debug
+  "TAB n" #'dap-next
+  "TAB t" #'dap-disconnect
+  "TAB i" #'dap-step-in
+  "TAB o" #'dap-step-out
+  "TAB c" #'dap-continue
+  "TAB l" #'dap-ui-locals
+  "TAB R" #'dap-ui-repl
+  "TAB B" #'dap-ui-breakpoints-list
+  "TAB b" #'dap-breakpoint-toggle)
 
 
 (rubicon/leader-<f13>
