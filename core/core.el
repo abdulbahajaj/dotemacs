@@ -33,6 +33,7 @@
 	((or defining-kbd-macro executing-kbd-macro) nil)
 	;; Back to the default
 	((keyboard-quit))))
+
  (split-window
   (pos)
   (cond ((string= pos "right")
@@ -50,9 +51,11 @@
  (enable-modeline
   ()
   (setq mode-line-format rubicon--modeline-format))
+
  (disable-modeline
   ()
   (setq mode-line-format nil))
+
  (modeline-face
   (inherits background-color)
   `((t :inherit ,inherits
@@ -85,6 +88,7 @@
  (get-org-path
   (org-file)
   (format "%s/%s" rubicon/org-dir-path org-file))
+
  (create-org-writing
   ()
   (interactive)
@@ -238,10 +242,6 @@
   (rubicon/print-and-copy
    (or (buffer-file-name) default-directory)))
 
-
- 
-
-
  (window-swap
   (direction)
   "Move current window to the next window in DIRECTION.
@@ -277,9 +277,10 @@ the only window, use evil-window-move-* (e.g. `evil-window-move-far-left')."
 	(switch-to-buffer this-buffer))
       (select-window that-window))))
 
- (window-move-left ()
-		   "Swap windows to the left."
-		   (interactive) (rubicon/window-swap 'left))
+ (window-move-left
+  ()
+  "Swap windows to the left."
+  (interactive) (rubicon/window-swap 'left))
 
  (window-move-right
   ()
