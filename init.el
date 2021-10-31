@@ -27,3 +27,4 @@
   (print "init.el was not found"))
 
 (print (concat "emacs init time is " (emacs-init-time)))
+(put 'narrow-to-region 'disabled nil)

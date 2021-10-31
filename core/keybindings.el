@@ -34,18 +34,22 @@
  "("          'evil-scroll-down
  ")"          'evil-scroll-up
 
- ;; buff switching
- "S-<down>"     'rubicon/switch-to-last-persp
- "S-<up>"    'rubicon/switch-to-first-persp
- "S-<left>"     'persp-prev
- "S-<right>"    'persp-next
- ","    (ilm (switch-to-buffer (persp-other-buffer (current-buffer))))
- "s-,"    'persp-switch-last
- "s-o"    'persp-kill-others
- "s-n"    'rubicon/workspace-new
- "s-m"    'rubicon/workspace-show-all
- "s-d"    'rubicon/workspace-delete
- 
+ ;; Workspace switching
+ "S-<down>"   'rubicon/buff-last
+ "S-<up>"     'rubicon/buff-first
+ "S-<left>"   'rubicon/buff-prev
+ "S-<right>"  'rubicon/buff-next
+ "s-<down>"   'rubicon/switch-to-last-persp
+ "s-<up>"     'rubicon/switch-to-first-persp
+ "s-<left>"   'persp-prev
+ "s-<right>"  'persp-next
+ ","          (ilm (switch-to-buffer (persp-other-buffer (current-buffer))))
+ "s-,"        'persp-switch-last
+ "s-o"        'persp-kill-others
+ "s-n"        'rubicon/workspace-new
+ "s-m"        'rubicon/workspace-display-selected
+ "s-d"        'rubicon/workspace-delete
+
  ;; split
  "<down>"     'evil-window-down
  "<left>"     'evil-window-left
@@ -63,7 +67,7 @@
 
   ;; Workspaces
   "TAB d" 'rubicon/workspace-delete
-  "TAB TAB" 'rubicon/workspace-show-all
+  "TAB TAB" 'rubicon/workspace-display-selected
   "TAB s" 'persp-switch 
   "o" 'rubicon/workspace-kill-invisible-buffers
   "O" 'rubicon/workspace-kill-other-buffers

@@ -22,6 +22,94 @@
 
 (ns
  rubicon
+
+ (display-selected-minibuff-list
+  (selectedp str-list &optional index-offset)
+  (->> str-list
+       (--map-indexed
+	(propertize (format " %s:%s " (+ (or index-offset 0) it-index) it)
+		    'face
+		    (list ':background (if (funcall selectedp it-index it) "#0d5a91" nil)
+			  ':weight 'ultra-bold)))
+       (apply 'concat)
+       message))
+
+ (process-created-buff-p
+  (buffer-name)
+  (--some
+   (string-prefix-p it buffer-name)
+   '("*MiniBuf"
+     "*Minibuf"
+     "*Echo Area"
+     "*Messages*"
+     "*which-key*"
+     "*straight-"
+     "*code-conversion-work")))
+
+ (get-user-created-persp-buffs
+  ()
+  (--filter
+   (let* ((buffer-name (buffer-name it))
+	  (buffer-name (and buffer-name (string-trim buffer-name))))
+     (and (buffer-live-p it)
+	  (not (rubicon/process-created-buff-p buffer-name))))
+   (persp-current-buffers)))
+
+ (get-relative-buffer
+  (relative-index)
+  (let ((cur-buff (current-buffer))
+	(all-buffers (rubicon/get-user-created-persp-buffs)))
+    (if (= 1 (length all-buffers)) nil
+	(nth (+ relative-index
+	    (--find-index (eq it cur-buff) all-buffers))
+	 all-buffers) )))
+
+ (get-next-buff () (rubicon/get-relative-buffer 1))
+
+ (get-prev-buff
+  ()
+  (let ((pbuff (rubicon/get-relative-buffer -1)))
+    (if (and pbuff (eq (current-buffer) pbuff)) nil
+      pbuff)))
+
+ (display-selected-buffer
+  ()
+  (interactive)
+  (message
+   (let ((buffer-name (buffer-name (current-buffer))))
+     (rubicon/display-selected-minibuff-list
+      (lambda (_ it) (string= it buffer-name))
+      (--map (buffer-name it)
+	     (rubicon/get-user-created-persp-buffs))))))
+
+ (switch-if-some
+  (buff)
+  (if buff (switch-to-buffer buff)))
+
+ (buff-first
+  ()
+  (interactive)
+  (rubicon/switch-if-some (car (rubicon/get-user-created-persp-buffs)))
+  (rubicon/display-selected-buffer))
+
+ (buff-last
+  ()
+  (interactive)
+  (rubicon/switch-if-some (car (last (rubicon/get-user-created-persp-buffs))))
+  (rubicon/display-selected-buffer))
+
+ (buff-prev
+  ()
+  (interactive)
+  (rubicon/switch-if-some (rubicon/get-prev-buff))
+  (rubicon/display-selected-buffer))
+ 
+ (buff-next
+  ()
+  (interactive)
+  (rubicon/switch-if-some (rubicon/get-next-buff))
+  (rubicon/display-selected-buffer))
+
  (escape
   ()
   (interactive)
@@ -110,41 +198,30 @@
   (interactive)
   (persp-kill (persp-current-name)))
 
+ 
  (workspace-get-last-selected-buffer-name
   (persp-name)
-  (save-window-excursion
-    (progn
-      (->> (perspectives-hash)
-	   (gethash persp-name)
-	   persp-window-configuration
-	   set-window-configuration)
-      (->> (current-buffer)
-	   buffer-name
-	   string-trim))))
-
- (workspace-get-marked-list
-  ()
-  (let ((cur-persp-name (persp-current-name)))
-    (--map
-     (let ((persp-display-name
-	    (concat " " it ":"
-		    (-> it
-			rubicon/workspace-get-last-selected-buffer-name
-			(truncate-string-to-width 15))
-		    " ")))
-       (propertize persp-display-name
-		   'face
-		   (list ':background (if (string= cur-persp-name it) "#0d5a91" nil) ;; "#0d5a91"
-			 ':weight 'ultra-bold)))
-     (persp-names))))
-
- ;; (propertize "foo" 'face '(:background "red"))
-
- (workspace-show-all
+  (let ((current-persp-name (persp-current-name)))
+    (save-window-excursion
+      (progn
+	(when (not (string= persp-name current-persp-name))
+	  (->> (perspectives-hash)
+	       (gethash persp-name)
+	       persp-window-configuration
+	       set-window-configuration) )
+	(->> (current-buffer)
+	     buffer-name
+	     string-trim)))))
+ 
+ (workspace-display-selected
   ()
   (interactive)
-  (message
-   (apply 'concat (rubicon/workspace-get-marked-list))))
+  (let ((cur-workspace-num (dec (string-to-number (persp-current-name)))))
+    (rubicon/display-selected-minibuff-list
+     (lambda (it-index _) (= it-index cur-workspace-num))
+     (--map (rubicon/workspace-get-last-selected-buffer-name it)
+	    (persp-names))
+     1)))
 
  (workspace-is-last-buffer?
   ()
