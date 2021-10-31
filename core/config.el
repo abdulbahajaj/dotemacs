@@ -230,12 +230,12 @@
  'append)
 
 (multi-advice rubicon/show-workspaces :after
-	      (list 'persp-switch
-		    'persp-prev
-		    'persp-next
-		    'persp-kill)
+	      '(persp-switch
+		persp-prev
+		persp-next
+		persp-kill)
 	      (&rest _)
-	      (rubicon/workspace-show-all))
+	      (rubicon/workspace-display-selected))
 
 (provide 'config)
 ;;; config.el ends here
