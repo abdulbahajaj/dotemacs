@@ -1,5 +1,8 @@
 ;; -*- lexical-binding: t; -*-
 
+(defun inc (num) (+ num 1))
+(defun dec (num) (- num 1))
+
 ;;;###autoload
 (defmacro ilm (&rest body)
   `(lambda ()
