@@ -2,9 +2,12 @@
 ;;;; Misc 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(set-face-attribute 'fringe nil :background "#000")
+(set-face-attribute 'region nil :background light-blue)
+(set-face-attribute 'fringe nil :background "#fff")
+(with-eval-after-load 'hi-lock
+    (set-face-attribute 'hi-yellow 'nil :background light-blue))
 
-(set-face-attribute 'default 'nil :height 200)
+(set-face-attribute 'default 'nil :height 160)
 
 (dolist (enabled-fringe-in-mode '(prog-mode-hook
 				  magit-status-mode-hook
@@ -61,8 +64,6 @@
 (add-hook 'prog-mode-hook #'hs-minor-mode)
 (add-hook 'conf-mode-hook #'display-line-numbers-mode)
 
-(set-face-attribute 'cursor nil :background "#fff")
-(set-face-attribute 'window-divider nil :foreground "#222933")
 (customize-set-variable 'horizontal-scroll-bar-mode nil)
 (menu-bar-bottom-and-right-window-divider)
 
@@ -127,28 +128,32 @@
 	  ("DONE" ,@done)
 	  ("KILL" ,@done))))
 
-(let ((color (face-foreground 'default nil 'default)))
-  (dolist (face '(org-level-1
-		  org-level-2
-		  org-level-3
-		  org-level-4
-		  org-level-5
-		  org-level-6
-		  org-level-7
-		  org-level-8))
-    (set-face-attribute face nil :foreground color :weight 'ultra-bold :family "Serif Sans Serif")))
+(dolist (face '(org-level-1
+		org-level-2
+		org-level-3
+		org-level-4
+		org-level-5
+		org-level-6
+		org-level-7
+		org-level-8))
+  (set-face-attribute
+   face nil
+   :foreground default-foreground-color
+   :weight 'ultra-bold
+   :family "Serif Sans Serif"))
+       
 
 (dolist (face '(org-block-begin-line
 		org-block-end-line
-		org-level-1
+		;; org-level-1
 		org-code
 		org-block))
-  (set-face-attribute face nil :background "#242c36" :extend t))
+  (set-face-attribute face nil :background light-yellow :extend t))
 
-(dolist (face '(org-block-begin-line
-		org-block-end-line
-		org-level-1))
-  (set-face-attribute face nil :box '(:line-width 1 :color "#222933")))
+;; (dolist (face '(org-block-begin-line
+;; 		org-block-end-line
+;; 		org-level-1))
+;;   (set-face-attribute face nil :box '(:line-width 1 :color "#222933")))
 
 
 (set-face-attribute 'org-level-1 nil :height 1.3 )
@@ -199,21 +204,21 @@
 					 'org-mode-hook))
   (add-hook enable-modeline-mode-hook 'rubicon/enable-modeline))
 
-(defface rubicon-modeline-active
-  (rubicon/modeline-face 'mode-line "#ebebeb")
-  "Face used when modeline is enabled and active"
-  :group 'rubicon-faces)
-(defface rubicon-modeline-inactive
-  (rubicon/modeline-face 'mode-line-inactive  "#212121")
-  "Face used when modeline is enabled and inactive"
-  :group 'rubicon-faces)
+;; (defface rubicon-modeline-active
+;;   (rubicon/modeline-face 'mode-line "#ebebeb")
+;;   "Face used when modeline is enabled and active"
+;;   :group 'rubicon-faces)
+;; (defface rubicon-modeline-inactive
+;;   (rubicon/modeline-face 'mode-line-inactive  "#212121")
+;;   "Face used when modeline is enabled and inactive"
+;;   :group 'rubicon-faces)
 
 (setq rubicon-home-path (expand-file-name "~"))
 (setq rubicon--home-path-rg-starts-with (concat "^" rubicon-home-path))
 
-(dolist (remapping '((mode-line-inactive . rubicon-modeline-inactive)
-		     (mode-line . rubicon-modeline-active)))
-  (add-to-list 'face-remapping-alist remapping t))
+;; (dolist (remapping '((mode-line-inactive . rubicon-modeline-inactive)
+;; 		     (mode-line . rubicon-modeline-active)))
+;;   (add-to-list 'face-remapping-alist remapping t))
 
 (dolist (enable-modeline-mode-hook (list 'prog-mode-hook
 					 'yaml-mode-hook

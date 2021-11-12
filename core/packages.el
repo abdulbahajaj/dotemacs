@@ -15,7 +15,6 @@
   (load bootstrap-file nil 'nomessage))
 
 (setq straight-use-package-by-default t)
-
 (straight-use-package 'use-package)
 
 ;; Installing and configuring packages
@@ -163,7 +162,7 @@ to `magit-dispatch'."
 
 (use-package highlight-parentheses
   :config
-  (setq hl-paren-colors (cons "#FFFF00" hl-paren-colors))
+  (setq hl-paren-colors (cons "#d98d8d" hl-paren-colors))
   :hook (prog-mode . highlight-parentheses-mode))
 
 (use-package perspective
@@ -361,10 +360,7 @@ to `magit-dispatch'."
 (use-package markdown-mode)
 
 (use-package highlight-indent-guides
-  :hook (org-mode . (lambda ()
-		      (highlight-indent-guides-mode)
-		      (set-face-attribute 'highlight-indent-guides-top-character-face nil :foreground "#e0e0e0")
-		      (set-face-attribute 'highlight-indent-guides-character-face nil :foreground "#707070")))
+  :hook ((org-mode prog-mode) . highlight-indent-guides-mode)
   :init
   (require 'highlight-indent-guides)
   (setq highlight-indent-guides-method 'character 

@@ -18,6 +18,10 @@
 (defun rubicon/load (path)
   (load (concat user-emacs-directory path)))
 
+(setq light-blue "#7caafc"
+      light-yellow "#fae389"
+      default-foreground-color (face-foreground 'default nil 'default))
+
 (dolist (fname '("core/packages" "core/core" "core/config" "core/keybindings"))
   (rubicon/load fname))
 

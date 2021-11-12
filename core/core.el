@@ -29,8 +29,9 @@
        (--map-indexed
 	(propertize (format " %s:%s " (+ (or index-offset 0) it-index) it)
 		    'face
-		    (list ':background (if (funcall selectedp it-index it) "#0d5a91" nil)
-			  ':weight 'ultra-bold)))
+		    `(,@(if (funcall selectedp it-index it)
+			     '(:background "#1b4b76" :foreground "#fff"))
+		       :weight ultra-bold)))
        (apply 'concat)
        message))
 
@@ -62,7 +63,7 @@
     (if (= 1 (length all-buffers)) nil
 	(nth (+ relative-index
 	    (--find-index (eq it cur-buff) all-buffers))
-	 all-buffers) )))
+	 all-buffers))))
 
  (get-next-buff () (rubicon/get-relative-buffer 1))
 
