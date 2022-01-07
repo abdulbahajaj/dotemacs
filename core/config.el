@@ -7,7 +7,7 @@
 (with-eval-after-load 'hi-lock
     (set-face-attribute 'hi-yellow 'nil :background light-blue))
 
-(set-face-attribute 'default 'nil :height 160)
+(set-face-attribute 'default 'nil :height 155)
 
 (dolist (enabled-fringe-in-mode '(prog-mode-hook
 				  magit-status-mode-hook
