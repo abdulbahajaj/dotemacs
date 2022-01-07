@@ -12,10 +12,10 @@
 
  "#" 'swiper-isearch-thing-at-point
 
- "+" 'evil-window-increase-width
- "_" 'evil-window-decrease-width
- "M-=" 'evil-window-increase-height
- "M--" 'evil-window-decrease-height
+ "+"   (ilm (evil-window-increase-width  10))
+ "_"   (ilm (evil-window-decrease-width  10))
+ "M-=" (ilm (evil-window-increase-height 10))
+ "M--" (ilm (evil-window-decrease-height 10))
 
  "L"  (ilm (right-char 10))
  "H"  (ilm (left-char 10))
