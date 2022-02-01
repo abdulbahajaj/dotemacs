@@ -229,6 +229,17 @@
   (interactive)
   (not (> (length (persp-current-buffer-names)) 1)))
 
+ (workspace-open-buffer
+  (buffer)
+  (rubicon/workspace-new)
+  (switch-to-buffer buffer))
+ 
+ (workspace-open-current-buffer
+  ()
+  (interactive)
+  (rubicon/workspace-open-buffer
+   (current-buffer)))
+
  (workspace-new
   ()
   (interactive)

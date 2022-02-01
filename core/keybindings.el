@@ -46,6 +46,7 @@
  ","          (ilm (switch-to-buffer (persp-other-buffer (current-buffer))))
  "s-,"        'persp-switch-last
  "s-o"        'persp-kill-others
+ "s-b"        'rubicon/workspace-open-current-buffer
  "s-n"        'rubicon/workspace-new
  "s-m"        'rubicon/workspace-display-selected
  "s-d"        'rubicon/workspace-delete
