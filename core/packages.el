@@ -380,7 +380,8 @@ to `magit-dispatch'."
 
 (use-package elfeed)
 
-(use-package magit-todos)
+(use-package magit-todos
+  :hook (emacs-startup . magit-todos-mode))
 
 (use-package all-the-icons)
 
@@ -415,7 +416,8 @@ to `magit-dispatch'."
   (rubicon/setup-modeline)
   (add-hook 'doom-modeline-mode-hook 'rubicon/setup-modeline))
 
-(use-package better-jumper)
+(use-package better-jumper
+  :hook (emacs-startup . better-jumper-mode))
 
 (provide 'packages)
 ;;; packages.el ends here
