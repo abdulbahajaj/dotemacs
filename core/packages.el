@@ -382,5 +382,39 @@ to `magit-dispatch'."
 
 (use-package magit-todos)
 
+(use-package all-the-icons)
+
+(use-package doom-themes
+  :ensure t
+  :config
+  (add-to-list 'load-path
+	       (concat (straight--repos-dir)
+		        "emacs-doom-themes/extensions/"))
+  (require 'doom-themes-ext-org)
+  (require 'doom-themes-ext-treemacs)
+  
+  (setq doom-themes-enable-bold t 
+        doom-themes-enable-italic t)
+  (load-theme 'doom-vibrant t)
+  (setq doom-themes-treemacs-theme "doom-colors") 
+  (doom-themes-treemacs-config)
+  (doom-themes-org-config))
+
+(use-package doom-modeline
+  :ensure t
+  :config
+  (display-time)
+  (display-battery-mode)
+  (doom-modeline-def-modeline 'rubicon/modeline
+    '(bar 
+      buffer-default-directory workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+    '(objed-state battery grip gnus github debug repl lsp input-method indent-info buffer-encoding major-mode process vcs checker))
+
+  (doom-modeline-mode 1)
+  (defun rubicon/setup-modeline ()
+    (doom-modeline-set-modeline 'rubicon/modeline 'default))
+  (rubicon/setup-modeline)
+  (add-hook 'doom-modeline-mode-hook 'rubicon/setup-modeline))
+
 (provide 'packages)
 ;;; packages.el ends here

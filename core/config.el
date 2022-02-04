@@ -2,10 +2,10 @@
 ;;;; Misc 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(set-face-attribute 'region nil :background light-blue)
-(set-face-attribute 'fringe nil :background "#fff")
-(with-eval-after-load 'hi-lock
-    (set-face-attribute 'hi-yellow 'nil :background light-blue))
+;; (set-face-attribute 'region nil :background light-blue)
+;; (set-face-attribute 'fringe nil :background "#fff")
+;; (with-eval-after-load 'hi-lock
+;;     (set-face-attribute 'hi-yellow 'nil :background light-blue))
 
 (set-face-attribute 'default 'nil :height 145)
 
@@ -138,17 +138,17 @@
 		org-level-8))
   (set-face-attribute
    face nil
-   :foreground default-foreground-color
+   :foreground "#d4d4d4"
    :weight 'ultra-bold
    :family "Serif Sans Serif"))
        
 
-(dolist (face '(org-block-begin-line
-		org-block-end-line
-		;; org-level-1
-		org-code
-		org-block))
-  (set-face-attribute face nil :background light-yellow :extend t))
+;; (dolist (face '(org-block-begin-line
+;; 		org-block-end-line
+;; 		;; org-level-1
+;; 		org-code
+;; 		org-block))
+;;   (set-face-attribute face nil :background light-yellow :extend t))
 
 ;; (dolist (face '(org-block-begin-line
 ;; 		org-block-end-line
@@ -158,7 +158,7 @@
 
 (set-face-attribute 'org-level-1 nil :height 1.3 )
 
-(set-face-attribute 'org-headline-done nil :foreground "#545454" :strike-through t)
+;; (set-face-attribute 'org-headline-done nil :foreground "#545454" :strike-through t)
 
 (setq org-log-done 'time)
 
@@ -187,22 +187,22 @@
 ;;;; Modeline 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq rubicon--modeline-format
-      (list ""
-	    '(:eval
-	      (rubicon/relative-default-dir))
-	    "%b @ %p"
-	    " | "
-	    'mode-name
-	    " |"
-	    'vc-mode))
+;; (setq rubicon--modeline-format
+;;       (list ""
+;; 	    '(:eval
+;; 	      (rubicon/relative-default-dir))
+;; 	    "%b @ %p"
+;; 	    " | "
+;; 	    'mode-name
+;; 	    " |"
+;; 	    'vc-mode))
 
-(dolist (enable-modeline-mode-hook (list 'prog-mode-hook
-					 'yaml-mode-hook
-					 'markdown-mode-hook
-					 'eshell-mode-hook
-					 'org-mode-hook))
-  (add-hook enable-modeline-mode-hook 'rubicon/enable-modeline))
+;; (dolist (enable-modeline-mode-hook (list 'prog-mode-hook
+;; 					 'yaml-mode-hook
+;; 					 'markdown-mode-hook
+;; 					 'eshell-mode-hook
+;; 					 'org-mode-hook))
+;;   (add-hook enable-modeline-mode-hook 'rubicon/enable-modeline))
 
 ;; (defface rubicon-modeline-active
 ;;   (rubicon/modeline-face 'mode-line "#ebebeb")
@@ -213,26 +213,26 @@
 ;;   "Face used when modeline is enabled and inactive"
 ;;   :group 'rubicon-faces)
 
-(setq rubicon-home-path (expand-file-name "~"))
-(setq rubicon--home-path-rg-starts-with (concat "^" rubicon-home-path))
+;; (setq rubicon-home-path (expand-file-name "~"))
+;; (setq rubicon--home-path-rg-starts-with (concat "^" rubicon-home-path))
 
 ;; (dolist (remapping '((mode-line-inactive . rubicon-modeline-inactive)
 ;; 		     (mode-line . rubicon-modeline-active)))
 ;;   (add-to-list 'face-remapping-alist remapping t))
 
-(dolist (enable-modeline-mode-hook (list 'prog-mode-hook
-					 'yaml-mode-hook
-					 'markdown-mode-hook
-					 'eshell-mode-hook
-					 'org-mode-hook))
-  (add-hook enable-modeline-mode-hook 'rubicon/enable-modeline))
+;; (dolist (enable-modeline-mode-hook (list 'prog-mode-hook
+;; 					 'yaml-mode-hook
+;; 					 'markdown-mode-hook
+;; 					 'eshell-mode-hook
+;; 					 'org-mode-hook))
+;;   (add-hook enable-modeline-mode-hook 'rubicon/enable-modeline))
 
 (add-hook 'text-mode-hook 'flyspell-mode)
 
-(font-lock-add-keywords
- 'org-mode
- `(("^[ \t]*\\(?:[-+*]\\|[0-9]+[).]\\)[ \t]+\\(\\(?:\\[@\\(?:start:\\)?[0-9]+\\][ \t]*\\)?\\[\\(?:X\\|\\([0-9]+\\)/\\2\\)\\][^\n]*\n\\)" 1 'org-headline-done prepend))
- 'append)
+;; (font-lock-add-keywords
+;;  'org-mode
+;;  `(("^[ \t]*\\(?:[-+*]\\|[0-9]+[).]\\)[ \t]+\\(\\(?:\\[@\\(?:start:\\)?[0-9]+\\][ \t]*\\)?\\[\\(?:X\\|\\([0-9]+\\)/\\2\\)\\][^\n]*\n\\)" 1 'org-headline-done prepend))
+;;  'append)
 
 (multi-advice rubicon/show-workspaces :after
 	      '(persp-switch
