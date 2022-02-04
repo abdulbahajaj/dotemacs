@@ -406,12 +406,12 @@ to `magit-dispatch'."
   (display-battery-mode)
   (doom-modeline-def-modeline 'rubicon/modeline
     '(bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
-    '(objed-state battery grip gnus github debug repl lsp input-method indent-info buffer-encoding major-mode process vcs))
+    '(objed-state misc-info battery grip gnus github debug repl lsp input-method indent-info buffer-encoding major-mode process vcs))
 
   (doom-modeline-mode 1)
   (defun rubicon/setup-modeline ()
     (doom-modeline-set-modeline 'rubicon/modeline 'default))
-  (setq mode-line-misc-info ())
+  (setq mode-line-misc-info (list "" display-time-string))
   (rubicon/setup-modeline)
   (add-hook 'doom-modeline-mode-hook 'rubicon/setup-modeline))
 
