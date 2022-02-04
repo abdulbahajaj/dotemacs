@@ -37,8 +37,8 @@
  ;; Workspace switching
  "S-<down>"   'rubicon/buff-last
  "S-<up>"     'rubicon/buff-first
- "S-<left>"   'rubicon/buff-prev
- "S-<right>"  'rubicon/buff-next
+ "S-<left>"   'better-jumper-jump-backward
+ "S-<right>"  'better-jumper-jump-forward
  "s-<down>"   'rubicon/switch-to-last-persp
  "s-<up>"     'rubicon/switch-to-first-persp
  "s-<left>"   'persp-prev

@@ -416,5 +416,7 @@ to `magit-dispatch'."
   (rubicon/setup-modeline)
   (add-hook 'doom-modeline-mode-hook 'rubicon/setup-modeline))
 
+(use-package better-jumper)
+
 (provide 'packages)
 ;;; packages.el ends here
