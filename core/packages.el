@@ -380,5 +380,7 @@ to `magit-dispatch'."
 
 (use-package elfeed)
 
+(use-package magit-todos)
+
 (provide 'packages)
 ;;; packages.el ends here
