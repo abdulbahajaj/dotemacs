@@ -393,8 +393,7 @@ to `magit-dispatch'."
   (require 'doom-themes-ext-org)
   (require 'doom-themes-ext-treemacs)
   
-  (setq doom-themes-enable-bold t 
-        doom-themes-enable-italic t)
+  (setq doom-themes-enable-bold nil)
   (load-theme 'doom-vibrant t)
   (setq doom-themes-treemacs-theme "doom-colors") 
   (doom-themes-treemacs-config)
