@@ -173,16 +173,13 @@ to `magit-dispatch'."
 (use-package docker
   :ensure t)
 
-(use-package esh-autosuggest
-  :hook ((eshell-mode . esh-autosuggest-mode)))
-
 (use-package evil-goggles
   :ensure t
   :config
   (evil-goggles-mode)
   (setq evil-goggles-duration 0.08))
 
-(use-package  replel
+(use-package replel
   :straight
   (replel
    :type git
@@ -235,27 +232,12 @@ to `magit-dispatch'."
   (setq highlight-thing-delay-seconds 0)
   (global-highlight-thing-mode))
 
-(use-package treemacs
-  :config
-  (treemacs-resize-icons 16))
-
-(use-package treemacs-evil
-  :after treemacs evil
-  :ensure t)
-
-(use-package treemacs-projectile
-  :after treemacs projectile
-  :ensure t)
-
 (use-package treemacs-magit
   :after treemacs magit
   :ensure t)
 
 (use-package org-superstar
   :hook ((org-mode . (lambda () (org-superstar-mode 1)))))
-
-(use-package eshell-fringe-status
-  :hook ((eshell-mode . eshell-fringe-status-mode)))
 
 (use-package dired-git-info
   ;; :hook ((dired-after-readin . dired-git-info-auto-enable))
@@ -277,10 +259,6 @@ to `magit-dispatch'."
   :bind (("M-j" . move-text-down)
 	 ("M-k" . move-text-up)))
 
-(use-package evil-numbers
-  :bind (("C-c +" . evil-numbers/inc-at-pt)
-	 ("C-c -" . evil-numbers/dec-at-pt)))
-
 (use-package flycheck-clj-kondo
   :ensure t)
 
@@ -289,25 +267,15 @@ to `magit-dispatch'."
   :config
   (require 'flycheck-clj-kondo))
 
-(use-package aggressive-indent
-  :hook ((emacs-lisp-mode clojure-mode) . aggressive-indent-mode))
-
 (use-package cider)
 (use-package cider-hydra
   :hook (clojure-mode . cider-hydra-mode))
-
-
-
-(use-package clj-refactor
-  :hook (clojure-mode . clj-refactor-mode))
 
 (use-package volatile-highlights
   :config
   (vhl/define-extension 'evil 'evil-paste-after 'evil-paste-before
 			'evil-paste-pop 'evil-move)
   (vhl/install-extension 'evil))
-
-
 
 (use-package evil-org
   :ensure t
@@ -348,17 +316,6 @@ to `magit-dispatch'."
   :config
   (global-flycheck-mode))
 
-(use-package writegood-mode
-  :hook (text-mode . writegood-mode))
-
-(use-package mixed-pitch
-  :hook
-  (text-mode . mixed-pitch-mode))
-
-(use-package writeroom-mode)
-
-(use-package markdown-mode)
-
 (use-package highlight-indent-guides
   :hook ((org-mode prog-mode) . highlight-indent-guides-mode)
   :init
@@ -367,8 +324,6 @@ to `magit-dispatch'."
 	highlight-indent-guides-responsive t))
 
 (use-package browse-at-remote)
-
-(use-package git-link)
 
 (use-package ivy-rich
   :after ivy
@@ -395,12 +350,8 @@ to `magit-dispatch'."
   (set-face-foreground 'git-gutter-fr:deleted  "#941938")
   (global-git-gutter-mode))
 
-
-
 (use-package yasnippet
   :hook (prog-mode . yas-minor-mode))
-
-(use-package clojure-snippets)
 
 (use-package doom-snippets
   :after yasnippet
@@ -411,21 +362,13 @@ to `magit-dispatch'."
   (setq doom-snippets-dir (concat (straight--repos-dir) "doom-snippets"))
   (doom-snippets-initialize))
 
-(use-package browse-kill-ring
-  :bind (:map browse-kill-ring-mode-map
-	      ("j" . browse-kill-ring-forward)
-	      ("k" . browse-kill-ring-previous)))
-
-
 (use-package pyimport)
-(use-package python-pytest)
 (use-package pip-requirements)
-;;(use-package flycheck-pyflakes)
 
 (use-package py-isort)
 
 (use-package lsp-mode
-  :hook (python-mode . lsp)
+  :hook ((python-mode ruby-mode) . lsp)
   :config
   (setq-default lsp-headerline-breadcrumb-enable nil))
 
@@ -434,6 +377,8 @@ to `magit-dispatch'."
   (require 'lsp-pyright))
 
 (use-package go-mode)
+
+(use-package elfeed)
 
 (provide 'packages)
 ;;; packages.el ends here

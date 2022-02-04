@@ -86,7 +86,6 @@
   "B" #'evil-buffer-new
   "b" #'browse-at-remote
   "y" 'rubicon/copy-path-to-buffer-file
-  "Y g" 'git-link-homepage
   "Y y" 'rubicon/copy-git-link-at-point
   
   "." 'counsel-find-file
