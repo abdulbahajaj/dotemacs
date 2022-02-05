@@ -1,6 +1,7 @@
 var/
 etc/
 local.el
+eln-cache/*
 straight/*
 !straight/versions/*
 /.DS_Store
