@@ -412,7 +412,7 @@ to `magit-dispatch'."
   (doom-modeline-mode 1)
   (defun rubicon/setup-modeline ()
     (doom-modeline-set-modeline 'rubicon/modeline 'default))
-  (setq mode-line-misc-info (list "" display-time-string))
+  (setq mode-line-misc-info '("" display-time-string))
   (rubicon/setup-modeline)
   (add-hook 'doom-modeline-mode-hook 'rubicon/setup-modeline))
 
