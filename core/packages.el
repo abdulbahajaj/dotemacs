@@ -419,5 +419,12 @@ to `magit-dispatch'."
 (use-package better-jumper
   :hook (emacs-startup . better-jumper-mode))
 
+(use-package magit-delta
+  :hook (emacs-startup . magit-delta-mode)
+  :after magit
+  :config
+  (setq magit-delta-hide-plus-minus-markers nil))
+
+
 (provide 'packages)
 ;;; packages.el ends here
