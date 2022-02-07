@@ -348,18 +348,6 @@ to `magit-dispatch'."
   (set-face-foreground 'git-gutter-fr:deleted  "#941938")
   (global-git-gutter-mode))
 
-(use-package yasnippet
-  :hook (prog-mode . yas-minor-mode))
-
-(use-package doom-snippets
-  :after yasnippet
-  :straight
-  (doom-snippets
-   :type git :host github :repo "hlissner/doom-snippets")
-  :init
-  (setq doom-snippets-dir (concat (straight--repos-dir) "doom-snippets"))
-  (doom-snippets-initialize))
-
 (use-package pyimport)
 (use-package pip-requirements)
 
