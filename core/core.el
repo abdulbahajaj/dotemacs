@@ -27,11 +27,16 @@
   (selectedp str-list &optional index-offset)
   (->> str-list
        (--map-indexed
-	(propertize (format " %s:%s " (+ (or index-offset 0) it-index) it)
-		    'face
-		    `(,@(if (funcall selectedp it-index it)
-			     '(:background "#1b4b76" :foreground "#fff"))
-		       :weight ultra-bold)))
+	(let* ((it (if (listp it)
+		       it
+		     (cons it (+ (or index-offset 0) it-index))))
+	       (num (cdr it))
+	       (it (car it)))
+	  (propertize (format " %s:%s " num it)
+		      'face
+		      `(,@(if (funcall selectedp num it)
+			      '(:background "#1b4b76" :foreground "#fff"))
+			:weight ultra-bold))))
        (apply 'concat)
        message))
 
@@ -217,10 +222,11 @@
  (workspace-display-selected
   ()
   (interactive)
-  (let ((cur-workspace-num (dec (string-to-number (persp-current-name)))))
+  (let ((cur-workspace (persp-current-name)))
     (rubicon/display-selected-minibuff-list
-     (lambda (it-index _) (= it-index cur-workspace-num))
-     (--map (rubicon/workspace-get-last-selected-buffer-name it)
+     (lambda (cur-name _)
+       (string= cur-name cur-workspace))
+     (--map (cons (rubicon/workspace-get-last-selected-buffer-name it) it)
 	    (persp-names))
      1)))
 
