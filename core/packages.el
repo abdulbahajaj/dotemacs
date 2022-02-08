@@ -148,7 +148,9 @@ to `magit-dispatch'."
   (global-undo-fu-session-mode))
 
 (use-package vterm
-  :ensure t)
+  :ensure t
+  :config
+  (setq vterm-max-scrollback 100000))
 
 (use-package diredfl
   :hook (dired-mode . diredfl-mode))
